@@ -1,0 +1,125 @@
+######################################################################
+# Atajos independientes
+
+# Atajos de programas
+super + {Return,d,b,c}
+    {kitty,discord,brave,code}
+
+super + l
+    ~/.scripts/lock.sh
+
+
+# Menu de programas
+super + @space
+	dmenu_run
+
+# Reiniciar sxhkd
+super + Escape
+	pkill -USR1 -x sxhkd
+######################################################################
+
+
+######################################################################
+# bspwm hotkeys
+
+# Reinicia bspwm 
+super + alt + r
+	bspc wm -r
+
+# Cierra o mata una ventana
+super + {_,shift + }w
+	bspc node -{c,k}
+
+# Enfoca la ventana actual a pantalla completa
+super + m
+	bspc desktop -l next
+
+
+
+
+######################################################################
+
+
+######################################################################
+# state/flags
+
+# set the window state
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+######################################################################
+
+
+######################################################################
+# Enfocar o cambiar
+
+# Enfocar a otra ventana o moverla
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+# Cambiar al escritorio anterior
+super + Tab
+	bspc desktop -f last
+
+#Ir al escritorio
+super + KP_{End,Down,Next,Left,Begin,Right}
+    bspc desktop -f ^{1,2,3,4,5,6}
+
+# Mover ventana al escritorio
+super + shift + KP_{1,2,3,4,5,6}
+    bspc node -d ^{1,2,3,4,5,6}
+######################################################################
+
+
+######################################################################
+# Nueva ventana
+
+# Establecer la direccion de la nueva ventana
+super + ctrl + {Left,Down,Up,Right}
+	bspc node -p {west,south,north,east}
+
+# Cancelar la direccion de la nueva ventana
+super + ctrl + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+######################################################################
+
+
+######################################################################
+# Redimensionar
+
+# Expandir ventana
+super + alt + {Left,Down,Up,Right}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Contraer ventana
+super + alt + shift + {Left,Down,Up,Right}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+######################################################################
+
+
+######################################################################
+# Teclas Funcion
+
+# Subir brillo
+XF86MonBrightnessUp
+    brightnessctl -d nvidia_0 set +10%
+
+# Bajar brillo
+XF86MonBrightnessDown
+    brightnessctl -d nvidia_0 set 10%-
+
+# Subir volumen
+XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+# Bajar volumen
+XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+# Silenciar / desilenciar
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+######################################################################
